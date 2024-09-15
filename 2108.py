@@ -1,5 +1,4 @@
 # 시간제한 2초, n <= 5*10^5, n^2 안됨
-from collections import defaultdict 
 n = int(input())
 
 li = [int(input()) for _ in range(n)]
