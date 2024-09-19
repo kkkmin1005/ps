@@ -11,67 +11,71 @@ for i in range(n):
     li[i].append(b)
 
 # 2차원 리스트의 첫번째 원소가 작는 녀석 순으로 정렬
-# 힙정렬 사용
+# 머지소트 사용
 
-def heapify1(arr, n, i):
-    largest = i  
-    l = 2 * i + 1     
-    r = 2 * i + 2     
- 
-    if l < n and arr[l][0] > arr[largest][0]:
-        largest = l
- 
-    if r < n and arr[r][0] > arr[largest][0]:
-        largest = r
- 
-    if largest != i:
-        arr[i], arr[largest] = arr[largest], arr[i]  
- 
-        heapify1(arr, n, largest)
- 
-def heap_sort1(arr):
-    n = len(arr)
- 
-    for i in range(n // 2 - 1, -1, -1):
-        heapify1(arr, n, i)
- 
-    for i in range(n-1, 0, -1):
-        arr[i], arr[0] = arr[0], arr[i]  
-        heapify1(arr, i, 0)
+def merge_sort0(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2  
+        L = arr[:mid].copy()
+        R = arr[mid:].copy() 
+
+        merge_sort0(L)    
+        merge_sort0(R)      
+
+        i = j = k = 0
+        while i < len(L) and j < len(R):
+            if L[i][0] < R[j][0]:
+                arr[k] = L[i]
+                i += 1
+            else:
+                arr[k] = R[j]
+                j += 1
+            k += 1
+
+        while i < len(L):
+            arr[k] = L[i]
+            i += 1
+            k += 1
+
+        while j < len(R):
+            arr[k] = R[j]
+            j += 1
+            k += 1
 
 # 2차원 리스트의 두번째 원소가 작는 녀석 순으로 정렬
-# 힙정렬 사용
+# 머지소트 사용
 
-def heapify2(arr, n, i):
-    largest = i  
-    l = 2 * i + 1     
-    r = 2 * i + 2     
- 
-    if l < n and arr[l][1] > arr[largest][1]:
-        largest = l
- 
-    if r < n and arr[r][1] > arr[largest][1]:
-        largest = r
- 
-    if largest != i:
-        arr[i], arr[largest] = arr[largest], arr[i]  
- 
-        heapify1(arr, n, largest)
- 
-def heap_sort2(arr):
-    n = len(arr)
- 
-    for i in range(n // 2 - 1, -1, -1):
-        heapify2(arr, n, i)
- 
-    for i in range(n-1, 0, -1):
-        arr[i], arr[0] = arr[0], arr[i]  
-        heapify2(arr, i, 0)
+def merge_sort1(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2  
+        L = arr[:mid].copy()
+        R = arr[mid:].copy() 
 
-heap_sort1(li)
-heap_sort2(li)
+        merge_sort1(L)    
+        merge_sort1(R)      
 
-print(li)
+        i = j = k = 0
+        while i < len(L) and j < len(R):
+            if L[i][1] < R[j][1] or (L[i][1] == R[j][1] and L[i][0] <= R[j][0]):
+                arr[k] = L[i]
+                i += 1
+            else:
+                arr[k] = R[j]
+                j += 1
+            k += 1
+
+        while i < len(L):
+            arr[k] = L[i]
+            i += 1
+            k += 1
+
+        while j < len(R):
+            arr[k] = R[j]
+            j += 1
+            k += 1
+
+merge_sort0(li)
+merge_sort1(li)
 
 sum = 1
 an.append(li[0])
@@ -82,8 +86,6 @@ for i in range(1,len(li)):
         sum += 1
     else:
         continue
-
-print(an)
 
 print(sum)
 
